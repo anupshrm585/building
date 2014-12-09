@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+	<h:head></h:head>
+<h:body>
+	<h:outputStylesheet library="css" name="style.css"  />
+	<h:form>
+	<div id="mainNav">
+	<p:megaMenu orientation="horizontal">
+		<p:menuitem value="Home" url="view/dashboard.xhtml" />
+		<p:menuitem value="Groups" url="groups.xhtml" /> 	
+	    <p:menuitem value="Quit" action="#{loginService.doLogout()}"  icon="ui-icon-close" />    
+	</p:megaMenu>
+	</div>
+</h:form>
+</h:body>
+</html>

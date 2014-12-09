@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile">
+<h:body>
+	<ui:composition template="/components/template.xhtml">	
+		<ui:define name="header">
+			<h:outputStylesheet library="css" name="style.css"  />
+		</ui:define>
+		<ui:define name="content">		
+		    <p:panel header="Login" id="login-panel">	
+		    <h:form id="login-form">
+		    	<p:growl id="growl" life="2000" />
+		    	<h:outputText value="Username: " />	    
+	    		<p:inputText id="username" required="true" requiredMessage="Please Enter Username" value="#{loginDTO.username}" >
+	    			<p:ajax event="blur" update="role" listener="#{loginService.getRoles()}"/>
+	    		</p:inputText>
+	    		<h:outputText for="username" />
+	    		<h:outputText value="Password: " />
+	  			<p:password id="password" value="#{loginDTO.password}" required="true" requiredMessage="Please Enter Password" />
+	  			<h:outputText for="password" />
+	  			<p:selectOneMenu id="role" name="role" value="#{loginDTO.groupId}" required="true" requiredMessage="Please Select a role" style="width:80%;margin:2px;">
+	  				<f:selectItem itemValue="" itemLabel="Select Role"></f:selectItem>
+	  				<f:selectItems value="#{loginDTO.roles}" var="entry" itemValue="#{entry.getId()}" itemLabel="#{entry.getTitle()}"></f:selectItems>
+	  			</p:selectOneMenu>
+	  			<h:outputText for="role" />
+	  			<br />
+	  			<br />	  			
+	    		<p:commandButton value="Submit" action="#{loginService.doLogin()}" update="login-form"></p:commandButton>
+	    	</h:form>    		
+			</p:panel>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</h:html>

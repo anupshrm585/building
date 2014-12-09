@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/components/template.xhtml">
+	<ui:define name="content">
+	<h:form id="grpTable">
+	<p:toolbar>
+		<f:facet name="left">
+	        Group List
+	    </f:facet>
+	    <f:facet name="right">
+	    		<p:commandButton value="New" update=":grpForm" oncomplete="PF('dlgForm').show();" actionListener="#{groupService.newRecord()}"></p:commandButton>
+		        <p:commandButton value="Delete" update=":grpForm grpTable"  actionListener="#{groupService.deleteRecord()}"></p:commandButton>
+	    </f:facet>
+	   </p:toolbar>
+	   
+	 
+	<p:dataTable var="group" value="#{groupService.getGroups()}"  
+	selection="#{groupService.groupDTOList}" rowKey="#{group.id}" style="margin-bottom:0">
+	 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+	    <p:column headerText="Id">
+	        <h:outputText value="#{group.id}" />
+	    </p:column>
+	    <p:column headerText="Title">
+	        <h:outputText value="#{group.title}" />
+	    </p:column>
+	 
+	    <p:column headerText="Deleted">
+	        <h:outputText value="#{group.deleted}" />
+	    </p:column>
+	 
+	    <p:column headerText="Active">
+	        <h:outputText value="#{group.active}" />
+	    </p:column>
+	    <p:column>
+	    	<p:commandButton value="Edit" oncomplete="PF('dlgForm').show();" update=":grpForm" actionListener="#{groupService.setGroupDTO(group)}"></p:commandButton>
+	    </p:column>
+	</p:dataTable>
+    </h:form>
+   
+	    <p:dialog id="grpDlg" header="Group Form" widgetVar="dlgForm" modal="true" height="100">	
+	     <h:form id="grpForm">
+    <p:growl id="growl" life="2000" />    	
+	    		<p:panel id="inputFields">
+	    			<h:outputText value="Group Title :"/>
+	    			<p:inputText value="#{groupService.groupDTO.title}"/>
+	    			<h:outputText value="Active :"/>
+	    			<p:selectOneMenu value="#{groupService.groupDTO.active}">
+	    				<f:selectItem itemValue="Y" itemLabel="Y"></f:selectItem>
+	    				<f:selectItem itemValue="N" itemLabel="N"></f:selectItem>
+	    			</p:selectOneMenu>
+	    			<p:commandButton value="Save" actionListener="#{groupService.saveRecord()}" oncomplete="PF('dlgForm').hide();" update=":grpTable grpForm">
+	    			</p:commandButton>
+	    			
+	    		</p:panel>	 
+	    		</h:form>   	
+		</p:dialog>
+	 
+	</ui:define>
+</ui:composition>
+</html>
