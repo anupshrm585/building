@@ -4,16 +4,15 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 @Entity
 @Table(name="build_group")
 @SuppressWarnings("serial")
 public class GroupDTO implements Serializable{
-@Id @GeneratedValue
+@Id
 @Column(name="id")
-private int id;
+private String id;
 @Column(name="title")
 private String title;
 @Column(name="is_deleted")
@@ -21,10 +20,11 @@ private String deleted ="N";
 @Column(name="is_active")
 private String active = "Y";
 
-public int getId() {
+
+public String getId() {
 	return id;
 }
-public void setId(int id) {
+public void setId(String id) {
 	this.id = id;
 }
 public String getTitle() {

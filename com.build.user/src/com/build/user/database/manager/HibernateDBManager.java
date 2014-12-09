@@ -1,6 +1,8 @@
 package com.build.user.database.manager;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -10,6 +12,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.build.connection.manager.HibernateSessionManager;
+import com.build.user.database.constants.Constants;
+import com.build.user.util.ResourceUtility;
+import com.build.util.BaseUtility;
 
 /**
  * This class is used for executing sql statements using hibernate
@@ -104,6 +109,52 @@ public class HibernateDBManager implements Serializable{
 		return records;
 	}
 
+	@SuppressWarnings("unchecked")
+	public Object insertData(Object obj,String code){
+		
+		Session session = factory.openSession();
+		Transaction tx = null;
+		Object id = null;
+		List<Object> records = null;
+		try {
+			tx = session.beginTransaction();
+		/*	Query res=session.createSQLQuery("Select get_id('GRP')");
+			records = res.list();
+			System.out.println(records);*/
+			String hql = ResourceUtility.getHQL(Constants.FETCH_ID);
+			List<String> params = new ArrayList<String>();
+			params.add(code);
+			hql = BaseUtility.makeString(hql, "#", params);
+			Query res=session.createSQLQuery(hql);
+			records = res.list();
+			System.out.println(records);
+			obj.getClass().getMethod("setId", String.class).invoke(obj, records.get(0).toString());			
+			id = session.save(obj);
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return id;
+	}
 	public void getResultSet(String query) {
 
 	}

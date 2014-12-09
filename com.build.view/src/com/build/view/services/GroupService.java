@@ -43,17 +43,19 @@ public class GroupService implements Serializable {
 	}
 
 	public void saveRecord() {
-		// System.out.println(groupDTO.getId());
-		int id = 0;
-		if (groupDTO.getId() != 0) {
-			if (hdbManager.updateData(groupDTO) == 1)
-				CommonUtil.displayMessage("Successfully Updated!");
+		 System.out.println(groupDTO.getId());
+		String id = null;
+		if (BaseUtility.isEmpty(groupDTO.getId())) {
+			if (BaseUtility.isNotEmpty(id = (String)hdbManager
+					.insertData(groupDTO,com.build.util.ResourceUtility.getKey(com.build.util.constants.Constants.GROUP_CODE))))
+				CommonUtil.displayMessage("Successfully Id Created! " + id);
 			else
 				CommonUtil.displayMessage("Error Occurded!");
+			
 		} else {
-			if (BaseUtility.isNotEmpty(id = (Integer) hdbManager
-					.insertData(groupDTO)))
-				CommonUtil.displayMessage("Successfully Id Created! " + id);
+			
+			if (hdbManager.updateData(groupDTO) == 1)
+				CommonUtil.displayMessage("Successfully Updated!");
 			else
 				CommonUtil.displayMessage("Error Occurded!");
 		}

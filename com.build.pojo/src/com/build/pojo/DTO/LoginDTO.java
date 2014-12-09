@@ -9,22 +9,17 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 public class LoginDTO implements Serializable{
-	private int groupId;
+	private String groupId;
 	private String groupTitle;
 	private List<ResultSetDTO> roles;
-	private int rightsId;
+	private String rightsId;
 	private String rightsTitle;
-	private int userId;
+	private String userId;
 	private String userTitle;
 	private String username;
 	private String password;
 	private boolean loggedIn;
-	public int getGroupId() {
-		return groupId;
-	}
-	public void setGroupId(int groupId) {
-		this.groupId = groupId;
-	}
+
 	public String getGroupTitle() {
 		return groupTitle;
 	}
@@ -39,22 +34,30 @@ public class LoginDTO implements Serializable{
 	public void setRoles(List<ResultSetDTO> roles) {
 		this.roles = roles;
 	}
-	public int getRightsId() {
-		return rightsId;
-	}
-	public void setRightsId(int rightsId) {
-		this.rightsId = rightsId;
-	}
+
 	public String getRightsTitle() {
 		return rightsTitle;
 	}
 	public void setRightsTitle(String rightsTitle) {
 		this.rightsTitle = rightsTitle;
 	}
-	public int getUserId() {
+
+	public String getGroupId() {
+		return groupId;
+	}
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
+	}
+	public String getRightsId() {
+		return rightsId;
+	}
+	public void setRightsId(String rightsId) {
+		this.rightsId = rightsId;
+	}
+	public String getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 	public String getUserTitle() {

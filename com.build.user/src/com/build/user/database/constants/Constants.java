@@ -7,4 +7,5 @@ public static String LOGIN_CHECK="LOGIN_CHECK";
 /********* HQL *****/
 
 public static String FETCH_GROUP="FETCH_GROUP";
+public static String FETCH_ID="FETCH_ID";
 }
