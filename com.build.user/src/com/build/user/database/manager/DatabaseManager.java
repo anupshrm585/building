@@ -1,6 +1,6 @@
 package com.build.user.database.manager;
 
-import java.lang.reflect.Field;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -60,12 +60,12 @@ public class DatabaseManager {
 				results.add(resultSetDTO);
 			}
 
-			ConnectionManager.getInstance().closeConnection(con, psmt, rs);
-		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage() + " : " + e.getClass().getName());
 		} catch (SQLException e) {
 			System.out.println(e.getMessage() + " : " + e.getClass().getName());
+		}finally{
+			ConnectionManager.getInstance().closeConnection(con, psmt, rs);
 		}
+		
 		return results;
 	}
 
@@ -88,26 +88,40 @@ public class DatabaseManager {
 				loginDTO.setLoggedIn(true);
 			} else
 				loginDTO.setLoggedIn(false);
-			ConnectionManager.getInstance().closeConnection(con, psmt, rs);
-		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage() + " : " + e.getClass().getName());
 		} catch (SQLException e) {
 			System.out.println(e.getMessage() + " : " + e.getClass().getName());
+		}finally{
+			ConnectionManager.getInstance().closeConnection(con, psmt, rs);
 		}
+		
 		return loginDTO;
 	}
 	
-	public void printFields(Object obj,String sql) throws Exception {
-		   
-		Class<?> objClass = obj.getClass();
-	    Field[] fields = objClass.getDeclaredFields();
-	    System.out.println(fields.length);	    
-	    for(Field field : fields) {
-	        String name = field.getName();
-	        name = name.substring(0, 1).toUpperCase() + name.substring(1);
-	        Object value = objClass.getMethod("get"+name, null).invoke(obj, null);
-	        //Object value = field.get(obj); + value.toString()
-	        System.out.println(name + ": " + value);
-	    }
+	public String callProcedure(Object obj,String sql,String code) throws Exception {
+		Connection con = null;
+		CallableStatement psmt = null;
+		ResultSet rs = null;   
+		String res = null;
+		List<Object> values = null;
+		String delimStr = null;
+		try {
+			values = BaseUtility.getValues(obj);
+			
+			if(BaseUtility.isNotEmpty(code))
+				values.add(code);
+			delimStr = BaseUtility.createDelimStr(values, "#");
+			con = ConnectionManager.getInstance().getConnection(params);
+			psmt = con.prepareCall(sql);
+			psmt.setString(1, delimStr);
+			psmt.registerOutParameter(2, java.sql.Types.VARCHAR);
+			psmt.execute();
+			res = psmt.getString(2);	
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage() + " : " + e.getClass().getName());
+		}finally{
+			ConnectionManager.getInstance().closeConnection(con, psmt, rs);
+		}
+		return res;
 	}
 }
