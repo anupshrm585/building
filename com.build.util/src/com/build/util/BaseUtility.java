@@ -42,7 +42,7 @@ public class BaseUtility {
 	        String name = field.getName();
 	        name = name.substring(0, 1).toUpperCase() + name.substring(1);
 			try {
-				value.add(objClass.getMethod("get"+name, null).invoke(obj, null));
+					value.add(objClass.getMethod("get"+name, null).invoke(obj, null));
 			} catch (IllegalAccessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

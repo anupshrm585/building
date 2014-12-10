@@ -9,7 +9,7 @@ public static String GROUP_DETAILS="GROUP_DETAILS";
 
 public static String FETCH_GROUP="FETCH_GROUP";
 public static String FETCH_ID="FETCH_ID";
-
+public static String FETCH_USER="FETCH_USER";
 
 /******** CODE *****/
 

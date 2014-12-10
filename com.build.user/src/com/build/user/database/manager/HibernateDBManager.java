@@ -118,9 +118,6 @@ public class HibernateDBManager implements Serializable{
 		List<Object> records = null;
 		try {
 			tx = session.beginTransaction();
-		/*	Query res=session.createSQLQuery("Select get_id('GRP')");
-			records = res.list();
-			System.out.println(records);*/
 			String hql = ResourceUtility.getHQL(Constants.FETCH_ID);
 			List<String> params = new ArrayList<String>();
 			params.add(code);

@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/components/template.xhtml">
+	<ui:define name="content">
+	<h:form id="usrTable">
+	<p:toolbar>
+		<f:facet name="left">
+	        Users List
+	    </f:facet>
+	    <f:facet name="right">
+	    		<p:commandButton value="New" update=":usrForm" oncomplete="PF('dlgForm').show();" actionListener="#{userService.newRecord()}"></p:commandButton>
+		        <p:commandButton value="Delete" update=":usrForm usrTable"  actionListener="#{userService.deleteRecord()}"></p:commandButton>
+	    </f:facet>
+	   </p:toolbar>
+	   
+	 
+	<p:dataTable var="user" value="#{userService.getGroups()}"  
+	selection="#{userService.userDTOList}" rowKey="#{group.id}" style="margin-bottom:0">
+	 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+	    <p:column headerText="Id">
+	        <h:outputText value="#{group.id}" />
+	    </p:column>
+	    <p:column headerText="Title">
+	        <h:outputText value="#{group.title}" />
+	    </p:column>
+	 
+	    <p:column headerText="Deleted">
+	        <h:outputText value="#{group.deleted}" />
+	    </p:column>
+	 
+	    <p:column headerText="Active">
+	        <h:outputText value="#{group.active}" />
+	    </p:column>
+	    <p:column>
+	    	<p:commandButton value="Edit" oncomplete="PF('dlgForm').show();" update=":usrForm" actionListener="#{userService.setUserDTO(user)}"></p:commandButton>
+	    </p:column>
+	</p:dataTable>
+    </h:form>
+   
+	    <p:dialog id="usrDlg" header="User Form" widgetVar="dlgForm" modal="true" height="100">	
+	     <h:form id="usrForm">
+    <p:growl id="growl" life="2000" />    	
+	    		<p:panel id="inputFields">
+	    			<h:outputText value="User Title :"/>
+	    			<p:inputText value="#{userService.userDTO.title}"/>
+	    			<h:outputText value="Active :"/>
+	    			<p:selectOneMenu value="#{userService.userDTO.active}">
+	    				<f:selectItem itemValue="Y" itemLabel="Y"></f:selectItem>
+	    				<f:selectItem itemValue="N" itemLabel="N"></f:selectItem>
+	    			</p:selectOneMenu>
+	    			<p:commandButton value="Save" actionListener="#{userService.saveRecord()}" oncomplete="PF('dlgForm').hide();" update=":usrTable usrForm">
+	    			</p:commandButton>
+	    			
+	    		</p:panel>	 
+	    		</h:form>   	
+		</p:dialog>
+	 
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,12 +1,17 @@
 package com.build.user.main;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.build.pojo.DTO.GroupDTO;
+import com.build.pojo.DTO.ResultSetDTO;
+import com.build.pojo.DTO.UserDTO;
 import com.build.user.database.constants.Constants;
 import com.build.user.database.manager.DatabaseManager;
 import com.build.user.database.manager.HibernateDBManager;
 import com.build.user.util.ResourceUtility;
+import com.build.util.BaseUtility;
 
 public class TestMain {
 	/*
@@ -56,10 +61,25 @@ public class TestMain {
 		 * System.out.println(hdbManager.insertData(groupDTO,"GRP"));
 		 */
 		try {
-			System.out.println(
+			String str = "{call GROUP_DETAILS (?, ?:out)}";
+			for(String tempStr : str.split("\\?")){
+			System.out.println(tempStr);
+			
+			
+			}
+			
+		/*	UserDTO userDTO = new UserDTO();
+			ResultSetDTO resultSetDTO =new ResultSetDTO();
+			resultSetDTO.setId("GHE");
+			resultSetDTO.setTitle("Title");
+			List<ResultSetDTO> res =new ArrayList<ResultSetDTO>();
+			res.add(resultSetDTO);
+			userDTO.setGroups(res);
+			System.out.println(BaseUtility.getValues(userDTO));*/
+			/*System.out.println(
 					dbManager.callProcedure(groupDTO,
 							ResourceUtility.getQuery(Constants.GROUP_DETAILS),
-					ResourceUtility.getConfiguration(Constants.GROUP_CODE)));
+					ResourceUtility.getConfiguration(Constants.GROUP_CODE)));*/
 			// System.out.println(5 > 5);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
