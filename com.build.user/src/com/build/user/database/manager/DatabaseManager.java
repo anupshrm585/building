@@ -1,5 +1,6 @@
 package com.build.user.database.manager;
 
+import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -94,5 +95,19 @@ public class DatabaseManager {
 			System.out.println(e.getMessage() + " : " + e.getClass().getName());
 		}
 		return loginDTO;
+	}
+	
+	public void printFields(Object obj,String sql) throws Exception {
+		   
+		Class<?> objClass = obj.getClass();
+	    Field[] fields = objClass.getDeclaredFields();
+	    System.out.println(fields.length);	    
+	    for(Field field : fields) {
+	        String name = field.getName();
+	        name = name.substring(0, 1).toUpperCase() + name.substring(1);
+	        Object value = objClass.getMethod("get"+name, null).invoke(obj, null);
+	        //Object value = field.get(obj); + value.toString()
+	        System.out.println(name + ": " + value);
+	    }
 	}
 }
