@@ -1,5 +1,6 @@
 package com.build.user.database.manager;
 
+import java.io.Serializable;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +22,8 @@ import com.build.util.BaseUtility;
  * @author Anup
  * @version 1
  */
-public class DatabaseManager {
+@SuppressWarnings("serial")
+public class DatabaseManager implements Serializable {
 	/*
 	 * String params[] = { ResourceUtility.getConfiguration(Constants.DRIVER),
 	 * ResourceUtility.getConfiguration(Constants.DB_URL),

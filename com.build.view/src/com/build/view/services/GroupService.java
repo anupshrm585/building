@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.build.pojo.DTO.GroupDTO;
 import com.build.user.database.constants.Constants;
+import com.build.user.database.manager.DatabaseManager;
 import com.build.user.database.manager.HibernateDBManager;
 import com.build.user.util.ResourceUtility;
 import com.build.util.BaseUtility;
@@ -15,7 +16,7 @@ public class GroupService implements Serializable {
 	private GroupDTO groupDTO;
 	private List<GroupDTO> groupDTOList;
 	HibernateDBManager hdbManager = new HibernateDBManager();
-
+	DatabaseManager dbManager = new DatabaseManager();
 	public GroupDTO getGroupDTO() {
 		return groupDTO;
 	}
@@ -42,12 +43,33 @@ public class GroupService implements Serializable {
 		groupDTO = new GroupDTO();
 	}
 
-	public void saveRecord() {
+	public void saveRecord(){
+		String id=null;
+		try {
+			id=dbManager.callProcedure(groupDTO,
+					ResourceUtility.getQuery(Constants.GROUP_DETAILS),
+			ResourceUtility.getConfiguration(Constants.GROUP_CODE));
+			if(BaseUtility.isNotEmpty(id)){
+				if(id.equals("Success")){
+					CommonUtil.displayMessage("Successfully Updated!");
+				}
+				else
+					CommonUtil.displayMessage(id+ " Created Successfully!");
+			}else{
+				CommonUtil.displayMessage("Error Occurded!");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	public void saveRecordHB() {
 		 System.out.println(groupDTO.getId());
 		String id = null;
 		if (BaseUtility.isEmpty(groupDTO.getId())) {
 			if (BaseUtility.isNotEmpty(id = (String)hdbManager
-					.insertData(groupDTO,com.build.util.ResourceUtility.getKey(com.build.util.constants.Constants.GROUP_CODE))))
+					.insertData(groupDTO,ResourceUtility.getConfiguration(Constants.GROUP_CODE))))
 				CommonUtil.displayMessage("Successfully Id Created! " + id);
 			else
 				CommonUtil.displayMessage("Error Occurded!");
@@ -61,7 +83,7 @@ public class GroupService implements Serializable {
 		}
 	}
 
-	public void deleteRecord() {
+	public void deleteRecordHB() {
 		for (GroupDTO groupDTO : groupDTOList) {
 			groupDTO.setDeleted("N");
 			groupDTO.setActive("N");
@@ -71,6 +93,30 @@ public class GroupService implements Serializable {
 			else
 				CommonUtil.displayMessage("Error Occured in deleting "
 						+ groupDTO.getTitle());
+		}
+	}
+	
+	public void deleteRecord() {
+		for (GroupDTO groupDTO : groupDTOList) {
+			groupDTO.setDeleted("N");
+			groupDTO.setActive("N");
+			String id=null;
+			try {
+				id=dbManager.callProcedure(groupDTO,
+						ResourceUtility.getQuery(Constants.GROUP_DETAILS),
+				ResourceUtility.getConfiguration(Constants.GROUP_CODE));
+				if(BaseUtility.isNotEmpty(id)){
+					if(id.equals("Success")){
+						CommonUtil.displayMessage(groupDTO.getId()+" Successfully Deleted!");
+					}
+					
+				}else{
+					CommonUtil.displayMessage("Error Occurded!");
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
