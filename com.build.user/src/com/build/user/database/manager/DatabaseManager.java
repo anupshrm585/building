@@ -5,6 +5,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -125,5 +126,29 @@ public class DatabaseManager implements Serializable {
 			ConnectionManager.getInstance().closeConnection(con, psmt, rs);
 		}
 		return res;
+	}
+	public List<Object> fetchResults(Object obj,String sql){
+		Connection con = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		ResultSetMetaData rsmd = null;
+		List<Object> values = null;
+		int i=0;
+		try {
+			con = ConnectionManager.getInstance().getConnection(params);
+			psmt = con.prepareCall(BaseUtility.queryBuilder(sql));
+			rs = psmt.executeQuery();
+			rsmd = rs.getMetaData();
+			for(i=1;i<=rsmd.getColumnCount();i++){
+				System.out.println(rsmd.getColumnName(i) +" : " +rsmd.getColumnTypeName(i));
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage() + " : " + e.getClass().getName());
+		}finally{
+			ConnectionManager.getInstance().closeConnection(con, psmt, rs);
+		}
+
+		
+		return values;
 	}
 }

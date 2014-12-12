@@ -22,6 +22,10 @@ public class TestMain {
 	 * String PASS = "root";
 	 */
 	public static void main(String[] args) {
+		
+		DatabaseManager dbManager = new DatabaseManager();
+		dbManager.fetchResults(new GroupDTO(), "Select * from #_group where is_active = 'Y' AND is_deleted = 'N'");
+		
 		/*
 		 * Connection conn = null; CallableStatement stmt = null; try{ //STEP 2:
 		 * Register JDBC driver Class.forName("com.mysql.jdbc.Driver");
@@ -53,13 +57,13 @@ public class TestMain {
 		 * }//end try System.out.println("Goodbye!");
 		 */
 
-		GroupDTO groupDTO = new GroupDTO();
+		/*GroupDTO groupDTO = new GroupDTO();
 		groupDTO.setTitle("Testing");
 		DatabaseManager dbManager = new DatabaseManager();
-		/*
+		
 		 * HibernateDBManager hdbManager = new HibernateDBManager();
 		 * System.out.println(hdbManager.insertData(groupDTO,"GRP"));
-		 */
+		 
 		try {
 			String str = "{call GROUP_DETAILS (?, ?:out)}";
 			for(String tempStr : str.split("\\?")){
@@ -68,24 +72,24 @@ public class TestMain {
 			
 			}
 			
-		/*	UserDTO userDTO = new UserDTO();
+			UserDTO userDTO = new UserDTO();
 			ResultSetDTO resultSetDTO =new ResultSetDTO();
 			resultSetDTO.setId("GHE");
 			resultSetDTO.setTitle("Title");
 			List<ResultSetDTO> res =new ArrayList<ResultSetDTO>();
 			res.add(resultSetDTO);
 			userDTO.setGroups(res);
-			System.out.println(BaseUtility.getValues(userDTO));*/
-			/*System.out.println(
+			System.out.println(BaseUtility.getValues(userDTO));
+			System.out.println(
 					dbManager.callProcedure(groupDTO,
 							ResourceUtility.getQuery(Constants.GROUP_DETAILS),
-					ResourceUtility.getConfiguration(Constants.GROUP_CODE)));*/
+					ResourceUtility.getConfiguration(Constants.GROUP_CODE)));
 			// System.out.println(5 > 5);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+*/
 	}
 
 }
