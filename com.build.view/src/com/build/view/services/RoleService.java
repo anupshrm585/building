@@ -3,7 +3,6 @@ package com.build.view.services;
 import java.io.Serializable;
 import java.util.List;
 
-import com.build.pojo.DTO.GroupDTO;
 import com.build.pojo.DTO.RoleDTO;
 import com.build.user.database.constants.Constants;
 import com.build.user.database.manager.HibernateDBManager;
@@ -12,27 +11,19 @@ import com.build.util.BaseUtility;
 import com.build.view.util.CommonUtil;
 
 @SuppressWarnings("serial")
-public class GroupService implements Serializable {
-	private GroupDTO groupDTO;
-	private List<GroupDTO> groupDTOList;
+public class RoleService implements Serializable {
+	private RoleDTO roleDTO;
 	private List<RoleDTO> roleDTOList;
 	HibernateDBManager hdbManager = new HibernateDBManager();
-	public GroupDTO getGroupDTO() {
-		return groupDTO;
+
+
+	public RoleDTO getRoleDTO() {
+		return roleDTO;
 	}
 
-	public void setGroupDTO(GroupDTO groupDTO) {
-		this.groupDTO = groupDTO;
+	public void setRoleDTO(RoleDTO roleDTO) {
+		this.roleDTO = roleDTO;
 	}
-
-	public List<GroupDTO> getGroupDTOList() {
-		return groupDTOList;
-	}
-
-	public void setGroupDTOList(List<GroupDTO> groupDTOList) {
-		this.groupDTOList = groupDTOList;
-	}
-	
 
 	public List<RoleDTO> getRoleDTOList() {
 		return roleDTOList;
@@ -43,25 +34,19 @@ public class GroupService implements Serializable {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GroupDTO> getGroups() {
-		return (List<GroupDTO>) (Object) hdbManager.getList(ResourceUtility
-				.getHQL(Constants.FETCH_GROUP));
-	}
-
-	@SuppressWarnings("unchecked")
-	public void getRoles(){
-		roleDTOList = (List<RoleDTO>) (Object) hdbManager.getList(ResourceUtility
+	public List<RoleDTO> getRoles() {
+		return (List<RoleDTO>) (Object) hdbManager.getList(ResourceUtility
 				.getHQL(Constants.FETCH_ROLE));
 	}
-	
+
 	public void newRecord() {
-		groupDTO = new GroupDTO();
+		roleDTO = new RoleDTO();
 	}
 
 	/*public void saveRecord(){
 		String id=null;
 		try {
-			id=dbManager.callProcedure(groupDTO,
+			id=dbManager.callProcedure(roleDTO,
 					ResourceUtility.getQuery(Constants.GROUP_DETAILS),
 			ResourceUtility.getConfiguration(Constants.GROUP_CODE));
 			if(BaseUtility.isNotEmpty(id)){
@@ -80,18 +65,18 @@ public class GroupService implements Serializable {
 		
 	}*/
 	public void saveRecord() {
-		 System.out.println(groupDTO.getId());
+		 System.out.println(roleDTO.getId());
 		String id = null;
-		if (BaseUtility.isEmpty(groupDTO.getId())) {
+		if (BaseUtility.isEmpty(roleDTO.getId())) {
 			if (BaseUtility.isNotEmpty(id = (String)hdbManager
-					.insertData(groupDTO,ResourceUtility.getConfiguration(Constants.GROUP_CODE))))
+					.insertData(roleDTO,ResourceUtility.getConfiguration(Constants.ROLE_CODE))))
 				CommonUtil.displayMessage("Successfully Id Created! " + id);
 			else
 				CommonUtil.displayMessage("Error Occurded!");
 			
 		} else {
 			
-			if (hdbManager.updateData(groupDTO) == 1)
+			if (hdbManager.updateData(roleDTO) == 1)
 				CommonUtil.displayMessage("Successfully Updated!");
 			else
 				CommonUtil.displayMessage("Error Occurded!");
@@ -99,39 +84,30 @@ public class GroupService implements Serializable {
 	}
 
 	public void deleteRecord() {
-		for (GroupDTO groupDTO : groupDTOList) {
-			/*groupDTO.setDeleted("Y");
-			groupDTO.setActive("N");*/
-			if (hdbManager.deleteData(groupDTO) == 1)
-				CommonUtil.displayMessage(groupDTO.getTitle()
+		for (RoleDTO roleDTO : roleDTOList) {
+			/*roleDTO.setDeleted("Y");
+			roleDTO.setActive("N");*/
+			if (hdbManager.deleteData(roleDTO) == 1)
+				CommonUtil.displayMessage(roleDTO.getTitle()
 						+ "Successfully Deleted!");
 			else
 				CommonUtil.displayMessage("Error Occured in deleting "
-						+ groupDTO.getTitle());
+						+ roleDTO.getTitle());
 		}
 	}
 	
-	public void setEdit(GroupDTO groupDTO){
-		setGroupDTO(groupDTO);
-		getRoles();
-	}
-	public void activate(GroupDTO groupDTO){
-		System.out.println(groupDTO.getActive());
-		setGroupDTO(groupDTO);
-		saveRecord();
-	}
 	/*public void deleteRecord() {
-		for (GroupDTO groupDTO : groupDTOList) {
-			groupDTO.setDeleted("N");
-			groupDTO.setActive("N");
+		for (roleDTO roleDTO : roleDTOList) {
+			roleDTO.setDeleted("N");
+			roleDTO.setActive("N");
 			String id=null;
 			try {
-				id=dbManager.callProcedure(groupDTO,
+				id=dbManager.callProcedure(roleDTO,
 						ResourceUtility.getQuery(Constants.GROUP_DETAILS),
 				ResourceUtility.getConfiguration(Constants.GROUP_CODE));
 				if(BaseUtility.isNotEmpty(id)){
 					if(id.equals("Success")){
-						CommonUtil.displayMessage(groupDTO.getId()+" Successfully Deleted!");
+						CommonUtil.displayMessage(roleDTO.getId()+" Successfully Deleted!");
 					}
 					
 				}else{

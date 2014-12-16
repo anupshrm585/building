@@ -3,16 +3,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
 	<h:head></h:head>
 <h:body>
+	<f:loadBundle basename="com.build.view.resources.menu" var="menu"/>
 	<h:outputStylesheet library="css" name="style.css"  />
 	<h:form>
 	<div id="mainNav">
 	<p:megaMenu orientation="horizontal">
-		<p:menuitem value="Home" url="dashboard.xhtml" />
-		<p:menuitem value="Groups" url="groups.xhtml" />
-		<p:menuitem value="Users" url="users.xhtml" /> 	
+		<p:menuitem value="Home" url="dashboard.xhtml" rendered="false" />
+		<p:menuitem value="Groups" url="#{menu['message.groups']}" />
+		<p:menuitem value="Users" url="#{menu['message.users']}" /> 	
+		<p:menuitem value="Roles" url="#{menu['message.roles']}" />
 	    <p:menuitem value="Quit" action="#{loginService.doLogout()}"  icon="ui-icon-close" />    
 	</p:megaMenu>
 	</div>

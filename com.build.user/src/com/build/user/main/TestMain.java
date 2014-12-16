@@ -23,8 +23,14 @@ public class TestMain {
 	 */
 	public static void main(String[] args) {
 		
-		DatabaseManager dbManager = new DatabaseManager();
-		dbManager.fetchResults(new GroupDTO(), "Select * from #_group where is_active = 'Y' AND is_deleted = 'N'");
+		/*DatabaseManager dbManager = new DatabaseManager();
+		dbManager.fetchResults(new GroupDTO(), "Select * from #_group where is_active = 'Y' AND is_deleted = 'N'");*/
+		HibernateDBManager hdb = new HibernateDBManager();
+		for(UserDTO userDTO : (List<UserDTO>)(Object)hdb.getList("from UserDTO")){
+			System.out.println(userDTO.getGroupDTO());
+		}
+		
+		
 		
 		/*
 		 * Connection conn = null; CallableStatement stmt = null; try{ //STEP 2:

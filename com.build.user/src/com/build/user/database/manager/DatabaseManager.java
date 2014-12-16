@@ -11,10 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.build.connection.manager.ConnectionManager;
-import com.build.pojo.DTO.LoginDTO;
 import com.build.pojo.DTO.ResultSetDTO;
-import com.build.user.database.constants.Constants;
-import com.build.user.util.ResourceUtility;
 import com.build.util.BaseUtility;
 
 /**
@@ -72,7 +69,7 @@ public class DatabaseManager implements Serializable {
 		return results;
 	}
 
-	public LoginDTO doLogin(LoginDTO loginDTO) {
+	/*public LoginDTO doLogin(LoginDTO loginDTO) {
 		Connection con = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
@@ -98,7 +95,7 @@ public class DatabaseManager implements Serializable {
 		}
 		
 		return loginDTO;
-	}
+	}*/
 	
 	public String callProcedure(Object obj,String sql,String code) throws Exception {
 		Connection con = null;

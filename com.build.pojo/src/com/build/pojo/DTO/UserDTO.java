@@ -1,10 +1,17 @@
 package com.build.pojo.DTO;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 @Entity
 @Table(name="build_user")
@@ -25,6 +32,24 @@ public class UserDTO implements Serializable {
 	private String active = "Y";
 	@Column(name="is_deleted")
 	private String deleted = "N";
+	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@JoinTable(name="build_user_group", 
+	                joinColumns=@JoinColumn (name="user_id"), 
+	                inverseJoinColumns=@JoinColumn(name="group_id"))
+	private List<GroupDTO> groupDTO = new ArrayList<GroupDTO>();
+
+	public UserDTO(){}
+	public UserDTO(String id, String title, String username, String password,
+			String emailId, String active, String deleted) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.username = username;
+		this.password = password;
+		this.emailId = emailId;
+		this.active = active;
+		this.deleted = deleted;
+	}
 
 	public String getId() {
 		return id;
@@ -81,5 +106,14 @@ public class UserDTO implements Serializable {
 	public void setDeleted(String deleted) {
 		this.deleted = deleted;
 	}
+
+	public List<GroupDTO> getGroupDTO() {
+		return groupDTO;
+	}
+
+	public void setGroupDTO(List<GroupDTO> groupDTO) {
+		this.groupDTO = groupDTO;
+	}
+	
 
 }

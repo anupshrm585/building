@@ -15,18 +15,18 @@
 		<ui:define name="content">		
 		    <p:panel header="Login" id="login-panel">	
 		    <h:form id="login-form">
-		    	<p:growl id="growl" life="2000" />
+		    	<p:growl id="growl"  />
 		    	<h:outputText value="Username: " />	    
-	    		<p:inputText id="username" required="true" requiredMessage="Please Enter Username" value="#{loginDTO.username}" >
-	    			<p:ajax event="blur" update="role" listener="#{loginService.getRoles()}"/>
+	    		<p:inputText id="username" required="true" requiredMessage="Please Enter Username" value="#{loginService.userDTO.username}" >
+	    			<p:ajax event="blur" update="role" listener="#{loginService.getRoles()}" />
 	    		</p:inputText>
 	    		<h:outputText for="username" />
 	    		<h:outputText value="Password: " />
-	  			<p:password id="password" value="#{loginDTO.password}" required="true" requiredMessage="Please Enter Password" />
+	  			<p:password id="password" value="#{loginService.userDTO.password}" required="true" requiredMessage="Please Enter Password" />
 	  			<h:outputText for="password" />
-	  			<p:selectOneMenu id="role" name="role" value="#{loginDTO.groupId}" required="true" requiredMessage="Please Select a role" style="width:80%;margin:2px;">
+	  			<p:selectOneMenu id="role" name="role" value="#{loginService.loginDTO.roleId}"   required="true" requiredMessage="Please Select a role" style="width:80%;margin:2px;">
 	  				<f:selectItem itemValue="" itemLabel="Select Role"></f:selectItem>
-	  				<f:selectItems value="#{loginDTO.roles}" var="entry" itemValue="#{entry.getId()}" itemLabel="#{entry.getTitle()}"></f:selectItems>
+	  				<f:selectItems value="#{loginService.loginDTO.roles}" var="entry" itemValue="#{entry.getId()}" itemLabel="#{entry.getTitle()}"></f:selectItems>
 	  			</p:selectOneMenu>
 	  			<h:outputText for="role" />
 	  			<br />

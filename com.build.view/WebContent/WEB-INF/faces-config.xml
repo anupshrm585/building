@@ -5,6 +5,12 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd"
     version="2.1">
+    <application>
+	  <resource-bundle>
+		<base-name>com.build.view.resources.menu</base-name>
+		<var>menu</var>
+	   </resource-bundle>
+     </application>
  <managed-bean>
   <managed-bean-name>loginDTO</managed-bean-name>
   <managed-bean-class>com.build.pojo.DTO.LoginDTO</managed-bean-class>
@@ -15,9 +21,17 @@
   <managed-bean-class>com.build.view.services.LoginService</managed-bean-class>
   <managed-bean-scope>request</managed-bean-scope>
   <managed-property>
+      <property-name>userDTO</property-name>
+      <value>#{userDTO}</value>
+  </managed-property>  
+  <managed-property>
+       <property-name>groupDTO</property-name>
+      <value>#{groupDTO}</value>
+  </managed-property>
+  <managed-property>
       <property-name>loginDTO</property-name>
       <value>#{loginDTO}</value>
-  </managed-property>  
+  </managed-property>
 </managed-bean>
  <managed-bean>
   <managed-bean-name>groupDTO</managed-bean-name>
@@ -45,6 +59,20 @@
   <managed-property>
       <property-name>userDTO</property-name>
       <value>#{userDTO}</value>
+  </managed-property>  
+</managed-bean>  
+<managed-bean>
+  <managed-bean-name>roleDTO</managed-bean-name>
+  <managed-bean-class>com.build.pojo.DTO.RoleDTO</managed-bean-class>
+  <managed-bean-scope>view</managed-bean-scope>
+</managed-bean> 
+<managed-bean>
+  <managed-bean-name>roleService</managed-bean-name>
+  <managed-bean-class>com.build.view.services.RoleService</managed-bean-class>
+  <managed-bean-scope>view</managed-bean-scope>
+  <managed-property>
+      <property-name>roleDTO</property-name>
+      <value>#{roleDTO}</value>
   </managed-property>  
 </managed-bean>  
 </faces-config>

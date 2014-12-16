@@ -24,6 +24,7 @@
 		<!-- List of XML mapping files -->
 		<mapping package="com.build.pojo.DTO" />
 		<mapping class="com.build.pojo.DTO.GroupDTO"/>
-
+		<mapping class="com.build.pojo.DTO.UserDTO"/>
+		<mapping class="com.build.pojo.DTO.RoleDTO"/>
 	</session-factory>
 </hibernate-configuration>

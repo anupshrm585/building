@@ -4,20 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "build_group")
+@Table(name = "build_roles")
 @SuppressWarnings("serial")
-public class GroupDTO implements Serializable {
+public class RoleDTO implements Serializable {
 	@Id
 	@Column(name = "id")
 	private String id;
@@ -27,21 +24,22 @@ public class GroupDTO implements Serializable {
 	private String deleted = "N";
 	@Column(name = "is_active")
 	private String active = "Y";
-	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "groupDTO")
-	private List<UserDTO> userDTO = new ArrayList<UserDTO>();
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "build_group_roles", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private List<RoleDTO> roleDTO = new ArrayList<RoleDTO>();
+	@Column(name = "url")
+	private String url;
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "roleDTO")
+	private List<GroupDTO> groupDTO = new ArrayList<GroupDTO>();
 
-	public GroupDTO() {
+	public RoleDTO() {
 	}
 
-	public GroupDTO(String id, String title, String deleted, String active) {
+	public RoleDTO(String id, String title, String deleted, String active,
+			String url) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.deleted = deleted;
 		this.active = active;
+		this.url = url;
 	}
 
 	public String getId() {
@@ -76,20 +74,20 @@ public class GroupDTO implements Serializable {
 		this.active = active;
 	}
 
-	public List<RoleDTO> getRoleDTO() {
-		return roleDTO;
+	public String getUrl() {
+		return url;
 	}
 
-	public void setRoleDTO(List<RoleDTO> roleDTO) {
-		this.roleDTO = roleDTO;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
-	public List<UserDTO> getUserDTO() {
-		return userDTO;
+	public List<GroupDTO> getGroupDTO() {
+		return groupDTO;
 	}
 
-	public void setUserDTO(List<UserDTO> userDTO) {
-		this.userDTO = userDTO;
+	public void setGroupDTO(List<GroupDTO> groupDTO) {
+		this.groupDTO = groupDTO;
 	}
 
 }

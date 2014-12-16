@@ -9,7 +9,45 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 public class LoginDTO implements Serializable{
-	private String groupId;
+	private UserDTO userDTO;
+	private GroupDTO groupDTO;
+	private String roleId;
+	private boolean loggedIn;
+	private List<ResultSetDTO> roles;
+	
+	public UserDTO getUserDTO() {
+		return userDTO;
+	}
+	public void setUserDTO(UserDTO userDTO) {
+		this.userDTO = userDTO;
+	}
+	public GroupDTO getGroupDTO() {
+		return groupDTO;
+	}
+	public void setGroupDTO(GroupDTO groupDTO) {
+		this.groupDTO = groupDTO;
+	}
+	public List<ResultSetDTO> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<ResultSetDTO> roles) {
+		this.roles = roles;
+	}
+	public String getRoleId() {
+		return roleId;
+	}
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
+	}
+	public boolean isLoggedIn() {
+		return loggedIn;
+	}
+	public void setLoggedIn(boolean loggedIn) {
+		this.loggedIn = loggedIn;
+	}
+	
+	
+	/*private String groupId;
 	private String groupTitle;
 	private List<ResultSetDTO> roles;
 	private String rightsId;
@@ -83,7 +121,7 @@ public class LoginDTO implements Serializable{
 	}
 	public void setLoggedIn(boolean loggedIn) {
 		this.loggedIn = loggedIn;
-	}
+	}*/
 	
 	
 

@@ -39,7 +39,7 @@
 	        <h:outputText value="#{group.active}" />
 	    </p:column>
 	    <p:column>
-	    	<p:commandButton value="Edit" oncomplete="PF('dlgForm').show();" update=":grpForm" actionListener="#{groupService.setGroupDTO(group)}"></p:commandButton>
+	    	<p:commandButton value="Edit" oncomplete="PF('dlgForm').show();" update=":grpForm" actionListener="#{groupService.setEdit(group)}"></p:commandButton>
 	    </p:column>
 	</p:dataTable>
     </h:form>
@@ -55,6 +55,18 @@
 	    				<f:selectItem itemValue="Y" itemLabel="Y"></f:selectItem>
 	    				<f:selectItem itemValue="N" itemLabel="N"></f:selectItem>
 	    			</p:selectOneMenu>
+	    			<p:dataTable var="role" selection="#{groupService.groupDTO.roleDTO}" value="#{groupService.roleDTOList}"  rowKey="#{role.id}" style="margin-bottom:0">
+				    <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+				    <p:column headerText="Id">
+				        <h:outputText value="#{role.id}" />
+				    </p:column>
+				    <p:column headerText="Title">
+				        <h:outputText value="#{role.title}" />
+				    </p:column>
+				    <p:column headerText="Url">
+				        <h:outputText value="#{role.url}" />
+				    </p:column>
+					</p:dataTable>	
 	    			<p:commandButton value="Save" actionListener="#{groupService.saveRecord()}" oncomplete="PF('dlgForm').hide();" update=":grpTable grpForm">
 	    			</p:commandButton>
 	    			
