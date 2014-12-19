@@ -67,6 +67,7 @@ public class LoginService {
 
 	public String doLogin() {
 		System.out.println(userDTO.getGroupDTO());
+		System.out.println(loginDTO.getRoleId());
 		// UserDTO userDTO=null;
 		List<Object> res = hdbManager.getList(ResourceUtility
 				.getHQL(Constants.FETCH_USER)
@@ -75,6 +76,8 @@ public class LoginService {
 				+ "' AND U.password = '"
 				+ this.userDTO.getPassword() + "'");
 		if (res.size() > 0) {
+			UserDTO userDTO = (UserDTO)res.get(0);
+			this.userDTO = userDTO;
 			for (GroupDTO grp : userDTO.getGroupDTO()) {
 				if (loginDTO.getRoleId().equals(grp.getId()))
 					groupDTO = grp;
@@ -110,8 +113,7 @@ public class LoginService {
 		if (obj.size() > 0) {
 			UserDTO userDTO = (UserDTO) (obj.get(0));
 			System.out.println(obj.get(0));
-			
-			setUserDTO(userDTO);
+			this.userDTO = userDTO;
 			ResultSetDTO temp = null;
 
 			for (GroupDTO grp : userDTO.getGroupDTO()) {

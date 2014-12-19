@@ -39,7 +39,7 @@
 	        <h:outputText value="#{role.active}" />
 	    </p:column>
 	    <p:column>
-	    	<p:commandButton value="Edit" oncomplete="PF('dlgForm').show();" update=":roleForm" actionListener="#{roleService.setroleDTO(role)}"></p:commandButton>
+	    	<p:commandButton value="Edit" oncomplete="PF('dlgForm').show();" update=":roleForm" actionListener="#{roleService.setRoleDTO(role)}"></p:commandButton>
 	    </p:column>
 	</p:dataTable>
     </h:form>
