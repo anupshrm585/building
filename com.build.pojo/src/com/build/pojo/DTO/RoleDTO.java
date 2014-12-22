@@ -12,7 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "build_roles")
+@Table(name = "edu_roles")
 @SuppressWarnings("serial")
 public class RoleDTO implements Serializable {
 	@Id

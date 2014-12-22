@@ -14,7 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 @Entity
-@Table(name="build_user")
+@Table(name="edu_user")
 @SuppressWarnings("serial")
 public class UserDTO implements Serializable {
 	@Id
@@ -33,7 +33,7 @@ public class UserDTO implements Serializable {
 	@Column(name="is_deleted")
 	private String deleted = "N";
 	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-	@JoinTable(name="build_user_group", 
+	@JoinTable(name="edu_user_group", 
 	                joinColumns=@JoinColumn (name="user_id"), 
 	                inverseJoinColumns=@JoinColumn(name="group_id"))
 	private List<GroupDTO> groupDTO = new ArrayList<GroupDTO>();
