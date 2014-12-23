@@ -1,11 +1,14 @@
 package com.build.user.manager;
 
+import java.io.Serializable;
+
 import com.build.pojo.DTO.RoleDTO;
 import com.build.user.database.constants.Constants;
 import com.build.user.database.manager.HibernateDBManager;
 import com.build.user.util.ResourceUtility;
 
-public class UserRoleManager {
+@SuppressWarnings("serial")
+public class UserRoleManager implements Serializable {
 	HibernateDBManager hdbManager = new HibernateDBManager();
 
 	public Object saveRecord(RoleDTO roleDTO) {
