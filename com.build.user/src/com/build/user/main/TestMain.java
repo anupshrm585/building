@@ -1,17 +1,5 @@
 package com.build.user.main;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.build.pojo.DTO.GroupDTO;
-import com.build.pojo.DTO.ResultSetDTO;
-import com.build.pojo.DTO.UserDTO;
-import com.build.user.database.constants.Constants;
-import com.build.user.database.manager.DatabaseManager;
-import com.build.user.database.manager.HibernateDBManager;
-import com.build.user.util.ResourceUtility;
-import com.build.util.BaseUtility;
 
 public class TestMain {
 	/*
@@ -25,10 +13,10 @@ public class TestMain {
 		
 		/*DatabaseManager dbManager = new DatabaseManager();
 		dbManager.fetchResults(new GroupDTO(), "Select * from #_group where is_active = 'Y' AND is_deleted = 'N'");*/
-		HibernateDBManager hdb = new HibernateDBManager();
+		/*HibernateDBManager hdb = new HibernateDBManager();
 		for(UserDTO userDTO : (List<UserDTO>)(Object)hdb.getList(ResourceUtility.getHQL(Constants.FETCH_USER))){
 			System.out.println(userDTO.getGroupDTO());
-		}
+		}*/
 		
 		
 		

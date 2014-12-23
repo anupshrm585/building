@@ -26,5 +26,6 @@
 		<mapping class="com.build.pojo.DTO.GroupDTO"/>
 		<mapping class="com.build.pojo.DTO.UserDTO"/>
 		<mapping class="com.build.pojo.DTO.RoleDTO"/>
+		<mapping class="com.build.pojo.DTO.CodesDTO"/>
 	</session-factory>
 </hibernate-configuration>

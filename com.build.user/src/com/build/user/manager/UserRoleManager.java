@@ -11,7 +11,7 @@ import com.build.user.util.ResourceUtility;
 public class UserRoleManager implements Serializable {
 	HibernateDBManager hdbManager = new HibernateDBManager();
 
-	public Object saveRecord(RoleDTO roleDTO) {
+	public Object insertData(RoleDTO roleDTO) {
 		return hdbManager.insertData(roleDTO,
 				ResourceUtility.getConfiguration(Constants.ROLE_CODE));
 	}

@@ -80,4 +80,18 @@
   <managed-bean-class>com.build.view.services.CommonService</managed-bean-class>
   <managed-bean-scope>view</managed-bean-scope>
  </managed-bean>
+ <managed-bean>
+  <managed-bean-name>codeDTO</managed-bean-name>
+  <managed-bean-class>com.build.pojo.DTO.CodesDTO</managed-bean-class>
+  <managed-bean-scope>view</managed-bean-scope>
+</managed-bean> 
+ <managed-bean>
+  <managed-bean-name>codesService</managed-bean-name>
+  <managed-bean-class>com.build.view.services.CodeService</managed-bean-class>
+  <managed-bean-scope>view</managed-bean-scope>
+  <managed-property>
+      <property-name>codeDTO</property-name>
+      <value>#{codeDTO}</value>
+  </managed-property>  
+</managed-bean>  
 </faces-config>

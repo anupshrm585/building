@@ -43,7 +43,7 @@ public class RoleService implements Serializable {
 		 System.out.println(roleDTO.getId());
 		String id = null;
 		if (BaseUtility.isEmpty(roleDTO.getId())) {
-			if (BaseUtility.isNotEmpty(id = (String)roleManager.saveRecord(roleDTO)))
+			if (BaseUtility.isNotEmpty(id = (String)roleManager.insertData(roleDTO)))
 				CommonUtil.displayMessage("Successfully Id Created! " + id);
 			else
 				CommonUtil.displayMessage("Error Occurded!");

@@ -8,14 +8,25 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "build_sequences")
+@Table(name = "edu_sequences")
 @SuppressWarnings("serial")
 public class SequenceDTO implements Serializable {
+
 	@Id
+	@Column(name="code_id")
+	private int codeId;
 	@Column(name = "sequence_name")
 	private String sequenceName;
 	@Column(name = "value")
 	private String value;
+
+	public int getCodeId() {
+		return codeId;
+	}
+
+	public void setCodeId(int codeId) {
+		this.codeId = codeId;
+	}
 
 	public String getSequenceName() {
 		return sequenceName;
