@@ -294,6 +294,123 @@ LOCK TABLES `error_log` WRITE;
 /*!40000 ALTER TABLE `error_log` DISABLE KEYS */;
 /*!40000 ALTER TABLE `error_log` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'education'
+--
+/*!50003 DROP FUNCTION IF EXISTS `GET_ID` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `GET_ID`(v_TITLE VARCHAR(30)) RETURNS varchar(30) CHARSET utf8
+BEGIN	
+
+        DECLARE v_CODE_ID INTEGER;
+
+        DECLARE v_VAL INTEGER;
+
+        DECLARE v_ID VARCHAR(30);
+
+        SELECT ecm.id code_id,es.value,CONCAT(ecm.code,LPAD(es.value,8,'0')) id INTO v_CODE_ID,v_VAL,v_ID
+
+        FROM 
+
+        edu_codes_master ecm
+
+        JOIN
+
+        edu_sequences es
+
+        ON ecm.id = es.code_id
+
+        WHERE ecm.title = v_TITLE;
+
+  UPDATE edu_sequences SET value=v_VAL+2 WHERE code_id = v_CODE_ID;
+
+	RETURN v_ID;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP FUNCTION IF EXISTS `GET_SIZE` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `GET_SIZE`(x LONGTEXT) RETURNS int(11)
+BEGIN
+
+      DECLARE v_DELIM VARCHAR(5);
+
+      DECLARE v_STR LONGTEXT;
+
+      SET v_DELIM = SUBSTRING(x, 1, 1);
+
+      SET v_STR = CONCAT(SUBSTRING(x, 2),v_DELIM);
+
+	    RETURN LENGTH(v_STR)-LENGTH(REPLACE(v_STR,v_DELIM,''));
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP FUNCTION IF EXISTS `SPLIT_STR` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `SPLIT_STR`(
+
+ x longtext,
+
+-- delim VARCHAR(12),
+
+ pos INT
+
+ ) RETURNS varchar(255) CHARSET utf8
+BEGIN
+
+  DECLARE v_DELIM VARCHAR(5);
+
+  DECLARE v_STR LONGTEXT;
+
+  SET v_DELIM = SUBSTRING(x, 1, 1);
+
+  SET v_STR = SUBSTRING(x, 2);
+
+  SET pos = pos + 1;
+
+  RETURN REPLACE(SUBSTRING(SUBSTRING_INDEX(v_STR, v_DELIM, pos),LENGTH(SUBSTRING_INDEX(v_STR, v_DELIM, pos -1)) + 1),
+
+  v_DELIM, '');
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -304,4 +421,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-12-23 12:01:00
+-- Dump completed on 2014-12-23 12:04:10
