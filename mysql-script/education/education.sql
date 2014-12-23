@@ -27,7 +27,7 @@ CREATE TABLE `edu_codes_master` (
   `title` varchar(45) NOT NULL,
   `code` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +36,7 @@ CREATE TABLE `edu_codes_master` (
 
 LOCK TABLES `edu_codes_master` WRITE;
 /*!40000 ALTER TABLE `edu_codes_master` DISABLE KEYS */;
-INSERT INTO `edu_codes_master` VALUES (1,'USER','USR'),(2,'GROUP','GRP'),(3,'ROLE','ROLE'),(4,'EMPLOYEE',NULL),(5,'UNIVERSITY',NULL),(6,'SCHOOL',NULL),(7,'COLLEGE',NULL);
+INSERT INTO `edu_codes_master` VALUES (1,'USER','USR'),(2,'GROUP','GRP'),(3,'ROLE','ROLE'),(4,'EMPLOYEE',NULL),(5,'UNIVERSITY',NULL),(6,'SCHOOL',NULL),(7,'COLLEGE',NULL),(8,'PRODUCT','PRO'),(9,'MODULES','MOD');
 /*!40000 ALTER TABLE `edu_codes_master` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -74,8 +74,12 @@ DROP TABLE IF EXISTS `edu_group_roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `edu_group_roles` (
-  `group_id` varchar(30) NOT NULL,
-  `roles_id` varchar(100) NOT NULL
+  `group_id` varchar(30) CHARACTER SET utf8 NOT NULL,
+  `roles_id` varchar(100) CHARACTER SET utf8 NOT NULL,
+  KEY `fk_group_id` (`group_id`),
+  KEY `fk_roles_id` (`roles_id`),
+  CONSTRAINT `fk_group_id` FOREIGN KEY (`group_id`) REFERENCES `edu_group` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_roles_id` FOREIGN KEY (`roles_id`) REFERENCES `edu_roles` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -136,7 +140,7 @@ CREATE TABLE `edu_sequences` (
 
 LOCK TABLES `edu_sequences` WRITE;
 /*!40000 ALTER TABLE `edu_sequences` DISABLE KEYS */;
-INSERT INTO `edu_sequences` VALUES (1,'USER_SEQ',3),(2,'GROUP_SEQ',5),(3,'ROLE_SEQ',7);
+INSERT INTO `edu_sequences` VALUES (1,'USER_SEQ',3),(2,'GROUP_SEQ',5),(3,'ROLE_SEQ',7),(8,'PRO_SEQ',5),(9,'MOD_SEQ',7);
 /*!40000 ALTER TABLE `edu_sequences` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -296,6 +300,137 @@ LOCK TABLES `error_log` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `modules_master`
+--
+
+DROP TABLE IF EXISTS `modules_master`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `modules_master` (
+  `id` varchar(30) NOT NULL,
+  `title` varchar(45) NOT NULL,
+  `is_active` enum('Y','N') NOT NULL,
+  `is_deleted` enum('N','Y') NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `modules_master`
+--
+
+LOCK TABLES `modules_master` WRITE;
+/*!40000 ALTER TABLE `modules_master` DISABLE KEYS */;
+INSERT INTO `modules_master` VALUES ('MOD00000001','University','Y','N'),('MOD00000003','School','Y','N'),('MOD00000005','Examination','Y','N');
+/*!40000 ALTER TABLE `modules_master` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `product_master`
+--
+
+DROP TABLE IF EXISTS `product_master`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `product_master` (
+  `id` varchar(30) NOT NULL,
+  `title` varchar(45) NOT NULL,
+  `is_active` enum('Y','N') NOT NULL,
+  `is_deleted` enum('N','Y') NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `product_master`
+--
+
+LOCK TABLES `product_master` WRITE;
+/*!40000 ALTER TABLE `product_master` DISABLE KEYS */;
+INSERT INTO `product_master` VALUES ('PRO00000001','Full Product','Y','N'),('PRO00000003','Online Display','Y','N');
+/*!40000 ALTER TABLE `product_master` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `product_module_master`
+--
+
+DROP TABLE IF EXISTS `product_module_master`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `product_module_master` (
+  `product_id` varchar(30) NOT NULL,
+  `modules_id` varchar(30) NOT NULL,
+  KEY `fk_product_module_master_product_master1` (`product_id`),
+  KEY `fk_product_module_master_modules_master1` (`modules_id`),
+  CONSTRAINT `fk_product_module_master_modules_master1` FOREIGN KEY (`modules_id`) REFERENCES `modules_master` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_product_module_master_product_master1` FOREIGN KEY (`product_id`) REFERENCES `product_master` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `product_module_master`
+--
+
+LOCK TABLES `product_module_master` WRITE;
+/*!40000 ALTER TABLE `product_module_master` DISABLE KEYS */;
+INSERT INTO `product_module_master` VALUES ('PRO00000001','MOD00000001'),('PRO00000001','MOD00000003'),('PRO00000001','MOD00000005'),('PRO00000003','MOD00000001'),('PRO00000003','MOD00000005');
+/*!40000 ALTER TABLE `product_module_master` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_module_master`
+--
+
+DROP TABLE IF EXISTS `user_module_master`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_module_master` (
+  `user_id` varchar(30) NOT NULL,
+  `modules_id` varchar(30) NOT NULL,
+  KEY `fk_user_module_build_user1` (`user_id`),
+  KEY `fk_user_module_modules_master1` (`modules_id`),
+  CONSTRAINT `fk_user_module_build_user1` FOREIGN KEY (`user_id`) REFERENCES `edu_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_module_modules_master1` FOREIGN KEY (`modules_id`) REFERENCES `modules_master` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_module_master`
+--
+
+LOCK TABLES `user_module_master` WRITE;
+/*!40000 ALTER TABLE `user_module_master` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_module_master` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_product_master`
+--
+
+DROP TABLE IF EXISTS `user_product_master`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_product_master` (
+  `product_master_id` varchar(30) NOT NULL,
+  `edu_user_id` varchar(30) NOT NULL,
+  KEY `fk_user_product_master_product_master1` (`product_master_id`),
+  KEY `fk_user_product_master_edu_user1` (`edu_user_id`),
+  CONSTRAINT `fk_user_product_master_edu_user1` FOREIGN KEY (`edu_user_id`) REFERENCES `edu_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_product_master_product_master1` FOREIGN KEY (`product_master_id`) REFERENCES `product_master` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_product_master`
+--
+
+LOCK TABLES `user_product_master` WRITE;
+/*!40000 ALTER TABLE `user_product_master` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_product_master` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping routines for database 'education'
 --
 /*!50003 DROP FUNCTION IF EXISTS `GET_ID` */;
@@ -421,4 +556,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-12-23 12:04:10
+-- Dump completed on 2014-12-23 14:01:42
