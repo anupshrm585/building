@@ -11,11 +11,7 @@ import com.build.pojo.DTO.GroupDTO;
 import com.build.pojo.DTO.LoginDTO;
 import com.build.pojo.DTO.ResultSetDTO;
 import com.build.pojo.DTO.UserDTO;
-import com.build.user.database.constants.Constants;
-import com.build.user.database.manager.HibernateDBManager;
 import com.build.user.manager.UserLoginManager;
-import com.build.user.util.ResourceUtility;
-import com.build.util.BaseUtility;
 import com.build.view.util.CommonUtil;
 
 public class LoginService {
@@ -24,7 +20,6 @@ public class LoginService {
 	private LoginDTO loginDTO;
 	HttpServletRequest request = (HttpServletRequest) (FacesContext
 			.getCurrentInstance().getExternalContext().getRequest());
-	HibernateDBManager hdbManager = new HibernateDBManager();
 
 	public UserDTO getUserDTO() {
 		return userDTO;
@@ -66,17 +61,9 @@ public class LoginService {
 	}
 
 	public String doLogin() {
-		System.out.println(userDTO.getGroupDTO());
-		System.out.println(loginDTO.getRoleId());
-		// UserDTO userDTO=null;
-		List<Object> res = hdbManager.getList(ResourceUtility
-				.getHQL(Constants.FETCH_USER)
-				+ " AND U.username = '"
-				+ this.userDTO.getUsername()
-				+ "' AND U.password = '"
-				+ this.userDTO.getPassword() + "'");
+		List<Object> res = UserLoginManager.getInstance().validateUser(userDTO);
 		if (res.size() > 0) {
-			UserDTO userDTO = (UserDTO)res.get(0);
+			UserDTO userDTO = (UserDTO) res.get(0);
 			this.userDTO = userDTO;
 			for (GroupDTO grp : userDTO.getGroupDTO()) {
 				if (loginDTO.getRoleId().equals(grp.getId()))
@@ -90,29 +77,19 @@ public class LoginService {
 		}
 		CommonUtil.displayMessage("Credentials Provided was incorrect!");
 		return "";
-		/*
-		 * loginDTO=dbManager.doLogin(loginDTO); if(loginDTO.isLoggedIn()){ }
-		 * showMessage("Credentials Provided was incorrect");
-		 */
-		// return "";
 	}
 
 	public String doLogout() {
 		UserLoginManager.getInstance().doLogout(request);
-		// loginDTO.setLoggedIn(false);
 		System.out.println("logged out");
 		return "/login.xhtml?faces-redirect=true";
 	}
 
 	public void getRoles() {
 		List<ResultSetDTO> resDTO = new ArrayList<ResultSetDTO>();
-		List<Object> obj = (hdbManager.getList(ResourceUtility
-				.getHQL(Constants.FETCH_USER)
-				+ " AND U.username = '"
-				+ userDTO.getUsername() + "'"));
+		List<Object> obj = UserLoginManager.getInstance().getUser(userDTO);
 		if (obj.size() > 0) {
 			UserDTO userDTO = (UserDTO) (obj.get(0));
-			System.out.println(obj.get(0));
 			this.userDTO = userDTO;
 			ResultSetDTO temp = null;
 
@@ -125,11 +102,5 @@ public class LoginService {
 			}
 			loginDTO.setRoles(resDTO);
 		}
-		/*
-		 * List<String> str =new ArrayList<String>();
-		 * str.add(loginDTO.getUsername());
-		 * loginDTO.setRoles(dbManager.fetchResults
-		 * (ResourceUtility.getQuery(Constants.FETCH_ROLES),str));
-		 */
 	}
 }

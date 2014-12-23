@@ -30,7 +30,7 @@ public class GroupDTO implements Serializable {
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "groupDTO")
 	private List<UserDTO> userDTO = new ArrayList<UserDTO>();
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "edu_group_roles", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JoinTable(name = "edu_group_roles", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "roles_id"))
 	private List<RoleDTO> roleDTO = new ArrayList<RoleDTO>();
 
 	public GroupDTO() {

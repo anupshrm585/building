@@ -26,7 +26,7 @@ public class TestMain {
 		/*DatabaseManager dbManager = new DatabaseManager();
 		dbManager.fetchResults(new GroupDTO(), "Select * from #_group where is_active = 'Y' AND is_deleted = 'N'");*/
 		HibernateDBManager hdb = new HibernateDBManager();
-		for(UserDTO userDTO : (List<UserDTO>)(Object)hdb.getList("from UserDTO")){
+		for(UserDTO userDTO : (List<UserDTO>)(Object)hdb.getList(ResourceUtility.getHQL(Constants.FETCH_USER))){
 			System.out.println(userDTO.getGroupDTO());
 		}
 		

@@ -1,8 +1,14 @@
 package com.build.user.manager;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.build.pojo.DTO.LoginDTO;
+import com.build.pojo.DTO.UserDTO;
+import com.build.user.database.constants.Constants;
+import com.build.user.database.manager.HibernateDBManager;
+import com.build.user.util.ResourceUtility;
 import com.build.util.BaseUtility;
 /**
  * UserLoginManager helps in managing user login and maintaining the session for a user
@@ -12,7 +18,7 @@ import com.build.util.BaseUtility;
 public class UserLoginManager {
 
 	private static UserLoginManager userLoginManager = null;
-
+	HibernateDBManager hdbManager = new HibernateDBManager();
 	private UserLoginManager() {
 	}
 
@@ -75,5 +81,20 @@ public class UserLoginManager {
 		}
 		return false;
 
+	}
+	
+	public List<Object> getUser(UserDTO userDTO){
+		return hdbManager.getList(ResourceUtility
+				.getHQL(Constants.FETCH_USER)
+				+ " AND U.username = '"
+				+ userDTO.getUsername() + "'");
+	}
+	public List<Object> validateUser(UserDTO userDTO){
+		return hdbManager.getList(ResourceUtility
+				.getHQL(Constants.FETCH_USER)
+				+ " AND U.username = '"
+				+ userDTO.getUsername()
+				+ "' AND U.password = '"
+				+ userDTO.getPassword() + "'");
 	}
 }
